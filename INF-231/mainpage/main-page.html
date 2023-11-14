@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Countdown Timer</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Include Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Include Flatpickr JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- ICONS CDN FONTAWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="main-content">
+        <div class="divinavinav">
+            <nav class="navinav">
+                <div class="container">
+                    <div class="navbar">
+                        <ul>
+                            <li class="active"><a href="main-page.html">Main Page</a></li>
+                            <li><a href="/INF-231/sducount/index.html">SDU Event countdowns</a></li>
+                            <li class="visible-sm-block"><a href="/INF-231/contactpage/index.html">Contact us</a></li>
+                            <li class="visible-sm-block"><a href="/INF-231/faqpage/index.html">FAQ</a></li>
+                            <li class="visible-sm-block"><a href="/INF-231/aboutpage/index.html">About</a></li>
+                        </ul>
+                        <div class="btn">
+                            <div class="btn__indicator">
+                              <div class="btn__icon-container">
+                                <i class="btn__icon fa-solid"></i>
+                              </div>
+                            </div>
+                          </div>
+                        <img src="login-logo-ps.png">
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="container-page">
+            <div class="page-header">
+                <h1>Event Countdown Timer</h1>
+            </div>
+        </div>
+        <p class="underheader">
+            Explore the art of time with our countdown clock creation tool, designed to bring anticipation and excitement to your events.
+        </p>
+        <div class="main">
+            <div class="left-content">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="countdown_widget_title">Countdown title</label>
+                        <input type="text" class="form-control" placeholder="Event Name" name="countdown_widget[title]" id="countdown_widget_title">
+                    </div>
+                    <div class="form-group">
+                        <label for="datepicker">Countdown to date</label>
+                        <input type="text" class="form-control" id="datepicker" placeholder="Select date">
+                    </div>
+
+                    <!-- Initialize Flatpickr -->
+                    <script>
+                        flatpickr("#datepicker", {
+                            dateFormat: "F j, Y", // Format the date as "Month day, Year"
+                            minDate: "today", // Set the minimum date to today
+                        });
+                    </script>
+                    <div class="form-group time optional countdown_widget_datetime">
+                        <label class="time optional control-label" for="countdown_widget_datetime_4i">Event time</label>
+                        <div class="form-inline">
+                            <select id="date_hour" name="countdown_widget[datetime_hour]" class="form-control">
+                                <!-- Options for hours -->
+                            </select>
+
+                            <select id="date_minute" name="countdown_widget[datetime_minute]" class="form-control">
+                                <!-- Options for minutes -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <script>
+                        function populateSelectOptions(selectElement, start, end) {
+                            for (let i = start; i <= end; i++) {
+                                const option = document.createElement('option');
+                                option.value = i < 10 ? '0' + i : '' + i;
+                                option.textContent = i < 10 ? '0' + i : '' + i;
+                                selectElement.appendChild(option);
+                            }
+                        }
+
+                        const hourSelect = document.getElementById('date_hour');
+                        const minuteSelect = document.getElementById('date_minute');
+
+                        // Populate the hour and minute select elements
+                        populateSelectOptions(hourSelect, 0, 23);
+                        populateSelectOptions(minuteSelect, 0, 59);
+                    </script>
+                    <div class="form-group time_zone optional countdown_widget_timeezone">
+                        <label class="time_zone optional control-label" for="countdown_widget_timeezone">Timezone</label>
+                        <select class="time_zone optional form-control" name="countdown_widget[timezone]" id="countdown_widget_timezone">
+                            <option value="">-- Please select --</option>
+                            <option value="0">(GMT+00:00) London</option>
+                            <option value="1">(GMT+01:00) Bern</option>
+                            <option value="2">(GMT+02:00) Helsinki</option>
+                            <option value="3">(GMT+03:00) Minsk</option>
+                            <option value="4">(GMT+04:00) Moscow</option>
+                            <option value="6">(GMT+06:00) Almaty</option>
+                            <option value="8">(GMT+08:00) Hong Kong</option>
+                            <option value="9">(GMT+09:00) Seoul</option>
+                        </select>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="row">
+                <div class="mid">
+                    <div id="countdown-container">
+                        <div class="countdown-rectangle">
+                            <div class="countdown-title"></div>
+                            <div class="countdown-timer">
+                                <span class="days">00</span> :
+                                <span class="hours">00</span> :
+                                <span class="minutes">00</span> :
+                                <span class="seconds">00</span>
+                            </div>
+                            <div class="countdown-date"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-content">
+                <div class="color-container">
+                    <label for="colorPicker">Text color</label>
+                    <div id="colorSquare" class="color-square" style="background-color: #ffffff;" onclick="toggleColorPalette()"></div>
+
+                    <div id="colorPalette" class="color-palette" style="display: none;">
+                        <div class="color" style="background-color: #ff0000;" onclick="changeColor('#ff0000')"></div>
+                        <div class="color" style="background-color: #00ff00;" onclick="changeColor('#00ff00')"></div>
+                        <div class="color" style="background-color: #0000ff;" onclick="changeColor('#0000ff')"></div>
+                        <div class="color" style="background-color: #ff00ff;" onclick="changeColor('#ff00ff')"></div>
+                        <div class="color" style="background-color: #ffff00;" onclick="changeColor('#ffff00')"></div>
+                        <div class="color" style="background-color: #00ffff;" onclick="changeColor('#00ffff')"></div>
+                        <div class="color" style="background-color: #ff8000;" onclick="changeColor('#ff8000')"></div>
+                        <div class="color" style="background-color: #8000ff;" onclick="changeColor('#8000ff')"></div>
+                        <div class="color" style="background-color: #ffffff;" onclick="changeColor('#ffffff')"></div>
+                        <div class="color" style="background-color: #000000;" onclick="changeColor('#000000')"></div>   
+                    </div>
+                </div>
+                <div class="color-container">
+                    
+                    <label for="bgColorPicker">Background color</label>
+                    <input type="color" id="bgColorPicker" value="#ffffff" onchange="changeBgColor()">
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer style="background-color: #888; color: #fff; padding: 20px; text-align: center;">
+        <p>&copy; By Taimasov Shyntemir - 2023 Event Countdown Timer. All rights reserved.</p>
+    </footer>
+    <script src="countdown-widget.js"></script>
+    <script src="palette.js"></script>
+    <script src="rectangle-palette.js"></script>
+    <script src="dark-mode.js"></script>
+</body>
+</html>
